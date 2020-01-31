@@ -21,13 +21,31 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% Following fig2 formulas
+% Add bias
+a1 = [ones(m, 1) X];
 
+% Compute z2
+z2 = Theta1 * a1';
 
+% Compute a2
+a2 = sigmoid(z2);
 
+% Add bias
+a2bias = [ones(size(a2'), 1) a2'];
 
+% Compute z3
+z3 = Theta2 * a2bias';
 
+% Compute a3
+a3 = sigmoid(z3)';
 
+% Now we have a matrix of m*num_labels, in which each row correspond
+% to a vector with the fitness value of each example for each class
+% We have to get the index (class) with maximum value
+[maximum, index] = max((a3), [], 2);
 
+p = index;
 
 % =========================================================================
 
