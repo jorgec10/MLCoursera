@@ -49,7 +49,26 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+% Set Initial theta
+initial_theta = zeros(n + 1, 1);
 
+% Set options for fminunc
+options = optimset('GradObj', 'on', 'MaxIter', 50);
+
+% Train each classifier independently
+for i=1:num_labels
+
+	% Run fmincg to obtain the optimal theta
+	% We use vector (y == c), which corresponds to a vector with 1 in the position with index c
+	% This vector correspond to a certain class
+	% In this way, fmincg will return the minimize value of theta to get that class.
+	% This function will return theta and the cost 
+	[theta] = fmincg (@(t)(lrCostFunction(t, X, (y == i), lambda)), initial_theta, options);
+
+	% Fill all_theta with the minimized value
+	all_theta(i,:) = theta';
+
+end;
 
 
 
