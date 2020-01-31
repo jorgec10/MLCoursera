@@ -36,14 +36,18 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+% Extracted from costFunctionReg.m from ex2
+h=sigmoid(X*theta);
+% Fill thetaJ with theta from 2 to size(theta)
+% We do not want j=0
+thetaJ = [0; theta(2:size(theta), :)];
+% Regularization
+regul = lambda  * (thetaJ' * thetaJ) / (2*m);
+% Cost function
+J = ((-y)' * log(h) - (1 - y)' * log(1 - h))/m + regul;
 
-
-
-
-
-
-
-
+% Gradient
+grad = (X' * (h-y))/m + (lambda*thetaJ)/m;
 
 % =============================================================
 
