@@ -103,14 +103,20 @@ J = J + reg;
 % For the output layer, compute the difference, here, delta3
 delta3 = a3 - Y;
 % Fore hidden layer, compute delta, in this case only delta2
+% We have to add the bias to the result of g'
 delta2 = (delta3 * Theta2) .* [ones(size(z2', 1), 1) sigmoidGradient(z2')];
+% Then we remove the first row, which correspond to the bias
 delta2 = delta2(:,2:end);
 
 % Compute grade
 Theta1_grad = (1/m) * (delta2' * a1);
 Theta2_grad = (1/m) * (delta3' * a2bias);
 
-
+% Regularization
+% We have to include a row of zeros first, because the first column of theta
+% is not regularized, as it is used for the bias term
+Theta1_grad += (lambda/m) * [zeros(size(Theta1, 1), 1) Theta1(:,2:end)];
+Theta2_grad += (lambda/m) * [zeros(size(Theta2, 1), 1) Theta2(:,2:end)];
 
 
 
