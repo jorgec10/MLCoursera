@@ -61,6 +61,7 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+% -------------------------------------------------------------
 
 % Compute h(x) step by step, code from ex3 predict.m 
 % Add bias
@@ -96,7 +97,19 @@ J = sum(sum((1/m) * ((-Y .* log(hx)) - ((1 - Y) .* log(1 - hx)))));
 reg = (lambda/(2*m)) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)));
 % Add reg
 J = J + reg;
-% -------------------------------------------------------------
+
+% For the output layer, compute the difference, here, delta3
+delta3 = a3 - Y;
+% Fore hidden layer, compute delta, in this case only delta2
+delta2 = (delta3 * Theta2) .* a2bias .* (1 - a2bias);
+
+% Compute grade
+Theta1_grad = a1' * delta2;
+Theta2_grad = a2 * delta3;
+
+
+
+
 
 % =========================================================================
 
