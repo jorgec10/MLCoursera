@@ -91,6 +91,11 @@ end
 % Now we can compute the cost function
 J = sum(sum((1/m) * ((-Y .* log(hx)) - ((1 - Y) .* log(1 - hx)))));
 
+% Regularized cost function
+% Compute the regularization term
+reg = (lambda/(2*m)) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)));
+% Add reg
+J = J + reg;
 % -------------------------------------------------------------
 
 % =========================================================================
