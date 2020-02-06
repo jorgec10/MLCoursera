@@ -98,14 +98,17 @@ reg = (lambda/(2*m)) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^
 % Add reg
 J = J + reg;
 
+%% Backpropagation
+
 % For the output layer, compute the difference, here, delta3
 delta3 = a3 - Y;
 % Fore hidden layer, compute delta, in this case only delta2
-delta2 = (delta3 * Theta2) .* a2bias .* (1 - a2bias);
+delta2 = (delta3 * Theta2) .* [ones(size(z2', 1), 1) sigmoidGradient(z2')];
+delta2 = delta2(:,2:end);
 
 % Compute grade
-Theta1_grad = a1' * delta2;
-Theta2_grad = a2 * delta3;
+Theta1_grad = (1/m) * (delta2' * a1);
+Theta2_grad = (1/m) * (delta3' * a2bias);
 
 
 
