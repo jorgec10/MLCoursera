@@ -15,10 +15,13 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
+% Iterate over the vector and store the p-th power
+for i = 1:p
+	X_poly(:,i) = X(:,1) .^ i;
+end
 
-
-
-
+% From internet: without using a for loop
+% X_poly(:,1:p) = X(:,1).^(1:p);
 
 % =========================================================================
 

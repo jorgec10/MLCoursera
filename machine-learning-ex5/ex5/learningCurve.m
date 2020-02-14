@@ -53,7 +53,22 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
+% Loop over the examples
+for i = 1:m
 
+    % Select i first examples
+    Xtrain = X(1:i,:);
+    ytrain = y(1:i);
+
+    % Learn theta, using lambda
+    theta = trainLinearReg(Xtrain, ytrain, lambda);
+    
+    % Compute train error, using only the current subset
+    error_train(i) = linearRegCostFunction(Xtrain, ytrain, theta, 0);
+    % Compute cross validation error, using the whole training set
+    error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
+
+end;
 
 
 

@@ -19,16 +19,16 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% Based on lrcostFunction.m from ex3
+hx = X * theta;
+% Regularization
+regul = (lambda / (2*m)) * sum(theta(2:end) .^ 2);
+% Cost function
+J = (sum((hx - y) .^ 2) / (2*m)) + regul;
 
-
-
-
-
-
-
-
-
-
+% Gradient
+grad(1) = (X(:,1)' * (hx - y)) / m;
+grad(2:end) = (X(:,2:end)' * (hx - y)) / m + (theta(2:end) * lambda)/m;
 
 % =========================================================================
 
