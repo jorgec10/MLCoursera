@@ -21,14 +21,15 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
+% Compute the mean
+mu = (1/m) * sum(X);
 
+% Compute the variance
+sigma2 = (1/m) * sum((X - mu).^ 2);
 
-
-
-
-
-
-
+% Return in the appropiate dimension
+mu = mu';
+sigma2 = sigma2';
 
 % =============================================================
 

@@ -41,19 +41,32 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+% First, we compute error
+err = (X * Theta') - Y;
 
+% Cost function
+% .*R to accumulate only the costs of user j and movie i that R(i,j)=1
+J = (1/2) * sum(sum(err .^ 2 .* R));
 
+% Gradient
+X_grad = (err .* R) * Theta;
+Theta_grad = (err .* R)' * X;
 
+% Now, add regularization
+% First in J
+% Regularization for theta
+Theta_reg_J = (lambda/2) * sum(sum(Theta .^ 2));
+% Regularization for X
+X_reg_J = (lambda/2) * sum(sum(X .^ 2));
+% Update cost function
+J = J + Theta_reg_J + X_reg_J;
 
-
-
-
-
-
-
-
-
-
+% Now in grad
+X_reg_grad = lambda * X;
+Theta_reg_grad = lambda * Theta;
+% Update grad
+X_grad = X_grad + X_reg_grad;
+Theta_grad = Theta_grad + Theta_reg_grad;
 
 % =============================================================
 
